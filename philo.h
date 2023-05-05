@@ -6,7 +6,7 @@
 /*   By: havyilma <havyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 11:51:44 by havyilma          #+#    #+#             */
-/*   Updated: 2023/04/30 20:18:20 by havyilma         ###   ########.fr       */
+/*   Updated: 2023/05/05 17:31:16 by havyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,29 @@ typedef struct s_table
 	int				time_to_sleep;
 	int				time_to_re;
 	pthread_mutex_t	*forks;
+	pthread_mutex_t *dead;
 	t_philo			*philos;
+	long long		start_time;
+	int				is_she_dead;
 
 }			t_table;
 
 
-int lets_take_av (t_table *table, char **av, int i, int j);
+int 	lets_take_av (t_table *table, char **av, int ac);
 void	*ft_routine(void *vargs);
-int ft_strlen(char *ac);
-int	ft_atoi(char *ac);
-int	ft_create_philo(t_table *table);
+int 	ft_strlen(char *ac);
+int		ft_atoi(char *ac);
+int		ft_create_philos(t_table *table);
+int		ft_check_av(int ac, char **av);
+int		ft_check_if_neg (t_table *table);
+int		ft_create_philos(t_table *table);
+int		ft_create_thread(t_table *table);
+long long	ft_get_time();
+void	ft_wait(long long milisec, t_table *table);
+
+
+
+
 
 
 

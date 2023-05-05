@@ -6,7 +6,7 @@
 /*   By: havyilma <havyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 12:11:35 by havyilma          #+#    #+#             */
-/*   Updated: 2023/04/30 17:31:03 by havyilma         ###   ########.fr       */
+/*   Updated: 2023/05/05 16:36:34 by havyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,61 @@ int	ft_atoi(char *ac)
 	}
 	return (rtrn);
 }
-/*
-void	*ft_rou(void *my_turn)
+
+int	ft_check_av(int ac, char **av)
 {
-//	pthread_mutex_t	mutex;
-	int i = 0;
-	int *number = (int *)my_turn;
-	while (i <= ft_atoi(my_turn))
+	int	i;
+	int	j;
+
+	i = 0;
+	j = -1;
+	if (!(ac == 5 || ac == 6))
 	{
-		pthread_mutex_lock(&mutex);
-		printf ("philo %d\n", i);
-		pthread_mutex_unlock(&mutex);
-		i++;
+		printf("Invalid number of arguments\n");
+		return (0);
 	}
-	return (NULL);
+	while (av[++i])
+	{
+		while (av[i][++j])
+		{
+			if (!(av[i][j] >= 48 && av[i][j] <= 57))
+			{
+				printf("Invalid type of argument\n");
+				return (0);
+			}
+		}
+		j = -1;
+	}
+	return (1);
 }
-*/
+
+int	ft_check_if_neg (t_table *table)
+{
+	if (table->nmb_of_phork <= 0
+		|| table->time_to_die <= 0
+		|| table->time_to_eat <= 0
+		|| table->time_to_sleep <= 0
+		|| table->time_to_re <= 0)
+		return (0);
+	return (1);
+}
+
+int	lets_take_av(t_table *table, char **av, int ac)
+{
+	/* UNUTMA while (av[++i])
+		while (av[i][++j])
+			if (!(av[i][j] >= 48 && av[i][j] <= 57))
+				return (0);*/
+	table->nmb_of_phork = ft_atoi(av[1]);
+	table->time_to_die = ft_atoi(av[2]);
+	table->time_to_eat = ft_atoi(av[3]);
+	table->time_to_sleep = ft_atoi(av[4]);
+	if (ac == 6)
+		table->time_to_re = ft_atoi(av[5]);
+	else
+		table->time_to_re = -2;
+	table->philos = malloc(sizeof(t_philo) * table->nmb_of_phork);
+	table->forks = malloc(sizeof(pthread_mutex_t) * table->nmb_of_phork);
+	ft_create_philos(table);
+	return (1);
+}
