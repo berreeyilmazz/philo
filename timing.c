@@ -25,10 +25,10 @@ int	ft_wait(long long milisec, t_table *table, t_philo *philo)
 {
 	while (ft_get_time() < milisec)
 	{
-		if (!ft_imdead(table, philo) && !ft_dead(table, philo))
-		{
+		if (!ft_dead(table, philo))
 			return (0);
-		}
+		if (!ft_imdead(table, philo))
+			return (0);
 		usleep(50);
 	}
 	return (1);

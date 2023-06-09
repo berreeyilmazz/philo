@@ -36,7 +36,10 @@ int ft_check_destroy(t_table *table)
 {
     pthread_mutex_lock(&(table->destroy));
     if(table->dest == 10)
+    {
+        pthread_mutex_unlock(&(table->destroy));
         return(0);
+    }
     pthread_mutex_unlock(&(table->destroy));
     return(1);
 }

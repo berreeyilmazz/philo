@@ -44,13 +44,17 @@ void	ft_create_philos_and_table(t_table *table)
 	pthread_mutex_init(&table->destroy, NULL);
 }
 
-void	ft_print(t_table *table, t_philo *philo, int p)
+int ft_print(t_table *table, t_philo *philo, int p)
 {
-	if (p == 5)
-		printf("%lld %d is died      tab_dead = %d \n", ft_get_time() - table->start, philo->id_num, *table->dead);
-	if (!ft_dead(table, philo))
-		return;
 	pthread_mutex_lock(&table->print);
+	if (!ft_return(table))
+	{
+		pthread_mutex_unlock(&table->print);
+		return (0);
+	}
+		pthread_mutex_unlock(&(table->is_she_dead));
+	if (p == 5)
+		printf("%lld %d is died\n", ft_get_time() - table->start, philo->id_num);
 	if (p == 1)
 		printf("%lld %d has taken a fork\n", ft_get_time() - table->start, philo->id_num);
 	else if (p == 2)
@@ -60,6 +64,9 @@ void	ft_print(t_table *table, t_philo *philo, int p)
 	else if (p == 4)
 		printf("%lld %d is thinking\n", ft_get_time() - table->start, philo->id_num);
 	pthread_mutex_unlock(&table->print);
+	pthread_mutex_unlock(&(table->is_she_dead));
+
+	return (1);
 }
 
 
@@ -72,6 +79,8 @@ void	*ft_routine(void *arg)
 	table = philo->table;
 	while (1)
 	{
+		if (!ft_dead(table, philo))
+			return (NULL);
 		if(!ft_rfork(table, philo))
 			break;
 		if(!ft_lfork(table, philo))

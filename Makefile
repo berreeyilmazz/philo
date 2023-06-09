@@ -2,7 +2,7 @@ SRCS	= create.c ft_av.c main.c timing.c action.c repeat_dead.c destroy.c
 OBJ		= $(SRCS:.c=.o)
 NAME	= philo
 CC		= gcc
-CFLAGS	= -Wall -Wextra -Werror -fsanitize=thread -g
+CFLAGS	= -Wall -Wextra -Werror 
 
 all 	: $(NAME)
 

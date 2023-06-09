@@ -23,6 +23,7 @@ int	main (int ac, char **av)
 		return (0);
 	if (!(ft_create_thread(&table)))
 		return (0);
+	
 	return (0);
 
 }

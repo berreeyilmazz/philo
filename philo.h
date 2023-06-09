@@ -63,7 +63,7 @@ int		ft_take_av(t_table *table, char **av, int ac);
 void	ft_create_philos_and_table(t_table *table);
 int		ft_dead(t_table *table, t_philo *philo);
 int		ft_repeat(t_table *table);
-void	ft_print(t_table *table, t_philo *philo, int p);
+int		ft_print(t_table *table, t_philo *philo, int p);
 int		ft_rfork(t_table *table, t_philo *philo);
 int		ft_lfork(t_table *table, t_philo *philo);
 int		ft_eating (t_table *table, t_philo *philo);
@@ -73,9 +73,10 @@ void	*ft_routine(void *arg);
 int		ft_create_thread(t_table *table);
 int		ft_get_time();
 int		ft_wait(long long milisec, t_table *table, t_philo *philo);
-int		ft_imdead(t_table *table, t_philo *philo);
 void ft_destroy(t_table *table);
 int ft_check_destroy(t_table *table);
+int	ft_imdead(t_table *table, t_philo *philo);
+int	ft_return (t_table *table);
 
 
 #endif
