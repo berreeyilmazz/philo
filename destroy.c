@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create.c                                           :+:      :+:    :+:   */
+/*   destroy.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: havyilma <havyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 17:55:15 by havyilma          #+#    #+#             */
-/*   Updated: 2023/06/01 21:35:50 by havyilma         ###   ########.fr       */
+/*   Updated: 2023/06/12 19:42:31 by havyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void ft_destroy(t_table *table)
+/*void ft_destroy(t_table *table)
 {
     int i;
 
@@ -42,4 +42,4 @@ int ft_check_destroy(t_table *table)
     }
     pthread_mutex_unlock(&(table->destroy));
     return(1);
-}
+}*/

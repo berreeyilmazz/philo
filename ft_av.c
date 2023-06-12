@@ -6,7 +6,7 @@
 /*   By: havyilma <havyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 15:40:57 by havyilma          #+#    #+#             */
-/*   Updated: 2023/05/20 22:22:58 by havyilma         ###   ########.fr       */
+/*   Updated: 2023/06/12 15:22:43 by havyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int	ft_atoi(char *ac)
 
 int	ft_take_av(t_table *table, char **av, int ac)
 {
+	table->argc = ac;
 	table->nmb_of_phork = ft_atoi(av[1]);
 	if (table->nmb_of_phork == 1)
 		return (0);

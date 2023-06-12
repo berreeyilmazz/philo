@@ -6,7 +6,7 @@
 /*   By: havyilma <havyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 17:55:15 by havyilma          #+#    #+#             */
-/*   Updated: 2023/06/01 21:35:50 by havyilma         ###   ########.fr       */
+/*   Updated: 2023/06/12 21:07:19 by havyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	ft_create_philos_and_table(t_table *table)
 	table->control = malloc(sizeof(int));
 	*table->dead = 0;
 	*table->control = 0;
-	table->dest = 0;
 	while (++i < table->nmb_of_phork)
 	{
 		table->philos[i].id_num = i + 1;
@@ -41,31 +40,27 @@ void	ft_create_philos_and_table(t_table *table)
 	pthread_mutex_init(&table->print, NULL);
 	pthread_mutex_init(&table->count, NULL);
 	pthread_mutex_init(&table->ctrl, NULL);
-	pthread_mutex_init(&table->destroy, NULL);
+	pthread_mutex_init(&table->dst, NULL);
+
 }
 
 int ft_print(t_table *table, t_philo *philo, int p)
 {
 	pthread_mutex_lock(&table->print);
-	if (!ft_return(table))
-	{
-		pthread_mutex_unlock(&table->print);
-		return (0);
-	}
-		pthread_mutex_unlock(&(table->is_she_dead));
 	if (p == 5)
 		printf("%lld %d is died\n", ft_get_time() - table->start, philo->id_num);
 	if (p == 1)
 		printf("%lld %d has taken a fork\n", ft_get_time() - table->start, philo->id_num);
 	else if (p == 2)
+	{
 		printf("%lld %d is eating\n", ft_get_time() - table->start, philo->id_num);
+
+	}
 	else if (p == 3)
 		printf("%lld %d is sleeping\n", ft_get_time() - table->start, philo->id_num);
 	else if (p == 4)
 		printf("%lld %d is thinking\n", ft_get_time() - table->start, philo->id_num);
 	pthread_mutex_unlock(&table->print);
-	pthread_mutex_unlock(&(table->is_she_dead));
-
 	return (1);
 }
 
@@ -79,20 +74,18 @@ void	*ft_routine(void *arg)
 	table = philo->table;
 	while (1)
 	{
-		if (!ft_dead(table, philo))
+		if (!ft_repeat(table))
 			return (NULL);
-		if(!ft_rfork(table, philo))
-			break;
-		if(!ft_lfork(table, philo))
-			break;
+			
 		if(!ft_eating(table, philo))
 			break;
-		if(!ft_sleeping(table, philo))
-			break;
+		if (!ft_print(table, philo, 3))
+			return (NULL);
 		if(!ft_wait(table->time_to_sleep + ft_get_time(), table, philo))
 			break;
-		if(!ft_thinking(table, philo))
-			break;
+		if (!ft_print(table, philo, 4))
+			return (NULL);
+
 	}
 	return(NULL);
 }
@@ -112,6 +105,7 @@ int	ft_create_thread(t_table *table)
 		usleep(100);
 	}
 	i = 0;
+	ft_check(table);
 	while (i < table->nmb_of_phork)
 	{
 		if (pthread_join(table->philos[i].thread_id, NULL))
